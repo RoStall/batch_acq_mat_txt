@@ -80,4 +80,4 @@ for file in file_list:
 # TxtWriter.write_file(data, "myfile.mat") # Creates a matlab file.
 # TODO iterate through channels for each 'for file' and check that it isn't empty or out of list index range.
 # TODO write each of these to text in own directory with same name as parent (e.g., datafile_txt) where directory and parent file are in same parent directory
-# 
+# TODO get channel alias an put in as header.
