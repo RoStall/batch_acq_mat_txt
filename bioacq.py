@@ -12,7 +12,7 @@ import os
 import glob
 import h5py
 
-#filename = raw_input('Enter File Name:')
+#directory = raw_input('Input directory to convert here:')
 directory = 'E:\Dropbox\BedRestStudy\MVC_PRE_2-2_test'
 dirfiles = os.listdir(directory)
 
@@ -55,13 +55,25 @@ print dir_list
 """
 from bioread.writers import TxtWriter
 from bioread.writers import MatlabWriter
+
+# Check # of data channels
+
+
+
 for file in file_list:
     print file
-    data = bioread.read_file(file)
-    print data.channels[5]
+    data = bioread.read_file(file) # txtwriter seems to write channels selected from data (from bioread.read_file).
     base, ext = os.path.splitext(file)
-    print base+'.txt'
-    MatlabWriter.write_file(data, base + '.mat')  # write txt
+    MatlabWriter.write_file(data, base + '.mat')  # write .mat
+    dcnum = range(len(data.channels)) # TODO only works if sequential channels used
+    for ch in dcnum:
+        print data.channels[ch]
+        base = os.path.basename(file)  # Get name of file without directory structure
+        path = os.path.dirname(file)  # Get path to file
+        name, extension = os.path.splitext(base)  # Split extension and filename
+        savename = name + 'ch_' + str(ch) + '.txt'  # the file's name itself -- no path
+        TxtWriter.write_file(data.channels[ch], path + '/' + name + '/' + savename)
+
 
 
 
